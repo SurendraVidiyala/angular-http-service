@@ -1,15 +1,16 @@
 <div class="container">
     <div class="row row-content" ng-controller="DishDetailController">
-        <div class="col-xs-12">
-            <button class="btn btn-xs btn-primary pull-right"
-                    type="button" ui-sref="app.menu">
+        <div class="col-xs-12" ng-if="!showDish">
+            <h3>{{message}}</h3>
+        </div>
+        <div class="col-xs-12" ng-if="showDish">
+            <button class="btn btn-xs btn-primary pull-right" type="button" ui-sref="app.menu">
                 Back to Menu
             </button>
             <div class="media">
                 <div class="media-left media-middle">
                     <a href="#">
-                        <img class="media-object img-thumbnail"
-                             ng-src={{dish.image}} alt="Uthappizza">
+                        <img class="media-object img-thumbnail" ng-src={{dish.image}} alt="Uthappizza">
                     </a>
                 </div>
                 <div class="media-body">
@@ -33,23 +34,17 @@
             </blockquote>
         </div>
         <div class="col-xs-9 col-xs-offset-1" ng-controller="DishCommentController">
-            <blockquote
-                    ng-show="commentForm.comment.$valid && !commentForm.comment.$pristine && commentForm.name.$valid && !commentForm.name.$pristine">
+            <blockquote ng-show="commentForm.comment.$valid && !commentForm.comment.$pristine && commentForm.name.$valid && !commentForm.name.$pristine">
                 <p>{{myComment.rating}} Stars</p>
                 <p>{{myComment.comment}}</p>
                 <footer>{{myComment.author}}, {{myComment.date | date}}</footer>
             </blockquote>
-            <form class="form-horizontal" name="commentForm"
-                  ng-submit="submitComment()" novalidate>
-                <div class="form-group"
-                     ng-class="{ 'has-error' : commentForm.name.$error.required && !commentForm.name.$pristine }">
+            <form class="form-horizontal" name="commentForm" ng-submit="submitComment()" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' : commentForm.name.$error.required && !commentForm.name.$pristine }">
                     <label for="name" class="col-sm-2 control-label">Your Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" name="name"
-                               placeholder="Enter Your Name"
-                               ng-model="myComment.author" required>
-                        <span ng-show="commentForm.name.$error.required && !commentForm.name.$pristine"
-                              class="help-block">Your name is required.</span>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name" ng-model="myComment.author" required>
+                        <span ng-show="commentForm.name.$error.required && !commentForm.name.$pristine" class="help-block">Your name is required.</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -67,14 +62,11 @@
                                                            ng-model="myComment.rating" checked> 5 </label>
                     </div>
                 </div>
-                <div class="form-group"
-                     ng-class="{ 'has-error' : commentForm.comment.$error.required && !commentForm.comment.$pristine }">
+                <div class="form-group" ng-class="{ 'has-error' : commentForm.comment.$error.required && !commentForm.comment.$pristine }">
                     <label for="comment" class="col-sm-2 control-label">Your Comments</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" rows="5" id="comment" name="comment"
-                                  ng-model="myComment.comment" required></textarea>
-                        <span ng-show="commentForm.comment.$error.required && !commentForm.comment.$pristine"
-                              class="help-block">Your name is required.</span>
+                        <textarea class="form-control" rows="5" id="comment" name="comment" ng-model="myComment.comment" required></textarea>
+                        <span ng-show="commentForm.comment.$error.required && !commentForm.comment.$pristine" class="help-block">Your name is required.</span>
                     </div>
                 </div>
                 <div class="form-group">

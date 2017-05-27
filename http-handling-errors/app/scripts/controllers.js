@@ -7,15 +7,19 @@ angular.module('anupamaApp')
     $scope.tab = 1;
     $scope.filtText = '';
     $scope.showDetails = false;
-
-    $scope.dishes = [];
+    $scope.showMenu = false;
+    $scope.message = "Loading ...";
+    $scope.dishes = {};
     menuFactory.getDishes()
         .then(
             function(response) {
                 $scope.dishes = response.data;
+                $scope.showMenu = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
-
 
     $scope.select = function(setTab) {
         $scope.tab = setTab;
@@ -73,11 +77,16 @@ angular.module('anupamaApp')
 .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
 
     $scope.dish = {};
+    $scope.showDish = false;
+    $scope.message = "Loading ...";
     menuFactory.getDish(parseInt($stateParams.id, 10))
         .then(
             function(response) {
                 $scope.dish = response.data;
                 $scope.showDish = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
 
@@ -103,19 +112,24 @@ angular.module('anupamaApp')
 // implement the IndexController and About Controller here
 .controller('IndexController', ['$scope', '$stateParams', 'menuFactory', 'corporateFactory', function($scope, $stateParams, menuFactory, corporateFactory) {
     var promotion = menuFactory.getPromotion(0);
-    var featured = menuFactory.getDish(0);
+
     var executive = corporateFactory.getLeader(3);
 
     $scope.promotion = promotion;
-    $scope.featured = featured;
+
     $scope.executive = executive;
     $scope.dish = {};
+    $scope.showDish = false;
+    $scope.message = "Loading ...";
 
     menuFactory.getDish(0)
         .then(
             function(response) {
                 $scope.dish = response.data;
                 $scope.showDish = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
 }])
