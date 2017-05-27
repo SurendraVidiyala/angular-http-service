@@ -1,5 +1,5 @@
 {
-    "name": "client-http-server",
+    "name": "http-handling-errors",
     "private": true,
     "devDependencies": {
         "browser-sync": "^2.18.12",
