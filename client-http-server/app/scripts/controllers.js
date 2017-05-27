@@ -8,7 +8,13 @@ angular.module('anupamaApp')
     $scope.filtText = '';
     $scope.showDetails = false;
 
-    $scope.dishes = menuFactory.getDishes();
+    $scope.dishes = [];
+    menuFactory.getDishes()
+        .then(
+            function(response) {
+                $scope.dishes = response.data;
+            }
+        );
 
 
     $scope.select = function(setTab) {
@@ -66,9 +72,14 @@ angular.module('anupamaApp')
 
 .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
 
-    var dish = menuFactory.getDish(parseInt($stateParams.id, 10));
-
-    $scope.dish = dish;
+    $scope.dish = {};
+    menuFactory.getDish(parseInt($stateParams.id, 10))
+        .then(
+            function(response) {
+                $scope.dish = response.data;
+                $scope.showDish = true;
+            }
+        );
 
 }])
 
@@ -98,6 +109,15 @@ angular.module('anupamaApp')
     $scope.promotion = promotion;
     $scope.featured = featured;
     $scope.executive = executive;
+    $scope.dish = {};
+
+    menuFactory.getDish(0)
+        .then(
+            function(response) {
+                $scope.dish = response.data;
+                $scope.showDish = true;
+            }
+        );
 }])
 
 .controller('AboutController', ['$scope', '$stateParams', 'corporateFactory', function($scope, $stateParams, corporateFactory) {
